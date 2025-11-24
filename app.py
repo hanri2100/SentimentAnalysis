@@ -21,6 +21,10 @@ st.markdown("""
             padding-left: 5rem;
             padding-right: 5rem;
         }
+        [data-testid="stSidebar"] hr {
+            margin-top: 0 !important;
+            margin-bottom: 10px !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -70,10 +74,10 @@ with st.sidebar:
                     st.toast(f"Dataset '{uploaded_file.name}' dimuat!", icon="✅")
                 except Exception as e:
                     st.error(f"Gagal memuat {uploaded_file.name}: {e}")
-
-    st.markdown("""
+    st.divider()
+    '''st.markdown("""
         <hr style="margin-top: 0px; margin-bottom: 0px; border: none; height: 1px; background-color: #444;">
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)'''
 
     st.write("### Pilih Dataset Aktif")
     if not st.session_state.datasets:
