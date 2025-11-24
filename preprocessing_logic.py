@@ -42,11 +42,20 @@ def get_stopword_list(language):
         negation_words = {'tidak', 'tak', 'jangan', 'bukan', 'belum', 'kurang'}
         base_stopwords = base_stopwords - negation_words
         custom_stopwords = set([
-            'aku', 'jadi', 'kak', 'moga', 'banget', 'nya', 'ya', 'yaa', 'sy', 'ga', 'gak',
-            'gaes', 'bro', 'sis', 'gw', 'gue', 'lu', 'lo', 'nih', 'tuh', 'sih',
-            'dong', 'deh', 'kok', 'yg', 'dgn', 'utk', 'aja', 'sja', 'lg',
-            'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'mau', 'min',
-            'apa', 'jadi', 'kenapa', 'gimana', 'kapan', 'mana'
+            # Kata Ganti Orang
+            'aku', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kita', 'dia',
+            
+            # Kata Sapaan
+            'kak', 'kakak', 'bro', 'sis', 'min', 'mimin', 'gan', 'bang', 'pak', 'bu', 'bunda',
+            
+            # Kata Sambung & Keterangan Gaul
+            'jadi', 'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 
+            'ga', 'gak', 'nggak', 'gaes', 'guys', 
+            'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah',
+            'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
+            'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'kl',
+            'mau', 'apa', 'kenapa', 'gimana', 'kapan', 'mana',
+            'pas', 'tadi', 'segini', 'begini', 'begitu', 'udh', 'udah', 'dah'
         ])
         return base_stopwords.union(custom_stopwords)
     elif language == 'en':
