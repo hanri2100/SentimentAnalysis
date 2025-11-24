@@ -26,7 +26,7 @@ st.markdown("""
             margin-bottom: 10px !important;
         }
         [data-testid="stSidebarUserContent"] {
-            padding-top: 0rem; /* Default Streamlit biasanya 6rem. Ubah angka ini makin kecil makin naik */
+            padding-top: 1rem !important; 
         }
     </style>
 """, unsafe_allow_html=True)
