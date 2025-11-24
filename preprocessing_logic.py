@@ -55,7 +55,8 @@ def get_stopword_list(language):
             'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
             'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'kl',
             'mau', 'apa', 'kenapa', 'gimana', 'kapan', 'mana',
-            'pas', 'tadi', 'segini', 'begini', 'begitu', 'udh', 'udah', 'dah'
+            'pas', 'tadi', 'segini', 'begini', 'begitu', 'udh', 'udah', 'dah',
+            'telkom', 'university', 'univ', 'kampus', 'tel-u'
         ])
         return base_stopwords.union(custom_stopwords)
     elif language == 'en':
