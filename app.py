@@ -333,7 +333,7 @@ with tab2:
                     wc_raw = vl.create_wordcloud(dict(zip(df_freq_raw['Kata'], df_freq_raw['Frekuensi'])))
                     st.image(wc_raw.to_array(), width='stretch')
                 with c2:
-                    st.write("**Top Kata (Raw)**")
+                    st.write("**20 Top Kata**")
                     fig_raw = vl.plot_word_frequency_seaborn(df_freq_raw)
                     st.pyplot(fig_raw)
             else:
@@ -365,10 +365,10 @@ with tab2:
                 if not df_freq_clean.empty:
                     c3, c4 = st.columns(2)
                     with c3:
-                        st.write("**Word Cloud (Clean)**")
+                        st.write("**Word Cloud**")
                         wc_clean = vl.create_wordcloud(dict(zip(df_freq_clean['Kata'], df_freq_clean['Frekuensi'])))
                         st.image(wc_clean.to_array(), width='stretch')
                     with c4:
-                        st.write("**Top Kata (Clean)**")
+                        st.write("**20 Top Kata**")
                         fig_clean = vl.plot_word_frequency_seaborn(df_freq_clean)
                         st.pyplot(fig_clean)
