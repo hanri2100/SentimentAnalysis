@@ -42,7 +42,7 @@ def get_stopword_list(language):
         negation_words = {'tidak', 'tak', 'jangan', 'bukan', 'belum', 'kurang'}
         base_stopwords = base_stopwords - negation_words
         custom_stopwords = set([
-            'aku', 'jadi', 'kak', 'moga', 'banget', 'nya', 'ya', 'ga', 'gak',
+            'aku', 'jadi', 'kak', 'moga', 'banget', 'nya', 'ya', 'yaa', 'sy', 'ga', 'gak',
             'gaes', 'bro', 'sis', 'gw', 'gue', 'lu', 'lo', 'nih', 'tuh', 'sih',
             'dong', 'deh', 'kok', 'yg', 'dgn', 'utk', 'aja', 'sja', 'lg',
             'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'mau', 'min',
@@ -84,7 +84,7 @@ def clean_tokens(tokens):
         # Hapus punctuation
         token = token.translate(str.maketrans('', '', string.punctuation))
         # Pastikan alphanumeric dan tidak kosong
-        if token.isalnum() and token != '':
+        if token.isalpha() and token != '':
             cleaned_tokens.append(token)
     return cleaned_tokens
 
