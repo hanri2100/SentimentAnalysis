@@ -136,7 +136,7 @@ with tab1:
         st.header("Pipeline Preprocessing")
 
     if not st.session_state.data_loaded:
-        st.info("👈 Silakan upload dan pilih dataset di sidebar.")
+        st.info("Silakan upload dan pilih dataset di sidebar.")
     else:
         st.divider()
 
