@@ -72,7 +72,7 @@ with st.sidebar:
                     st.error(f"Gagal memuat {uploaded_file.name}: {e}")
 
     st.markdown("""
-        <hr style="margin-top: 0px; margin-bottom: 10px; border: none; height: 1px; background-color: #444;">
+        <hr style="margin-top: 0px; margin-bottom: 0px; border: none; height: 1px; background-color: #444;">
     """, unsafe_allow_html=True)
 
     st.write("### Pilih Dataset Aktif")
