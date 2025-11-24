@@ -48,7 +48,7 @@ def calculate_word_frequency(data_series, is_tokenized):
         return pd.DataFrame(columns=['Kata', 'Frekuensi'])
 
 
-# --- Visualisasi (Best Practice: Return Figure Object) ---
+# --- Visualisasi (Return Figure Object) ---
 
 @st.cache_data
 def create_wordcloud(freq_dict):
