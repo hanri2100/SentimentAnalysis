@@ -1,13 +1,14 @@
-import re
 import string
-import streamlit as st
+
 import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+import pandas as pd
+import streamlit as st
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
-import pandas as pd
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+
 
 # --- Resources Loading (Cache) ---
 
@@ -16,9 +17,11 @@ def get_sastrawi_stemmer():
     factory = StemmerFactory()
     return factory.create_stemmer()
 
+
 @st.cache_resource
 def get_nltk_lemmatizer():
     return WordNetLemmatizer()
+
 
 def load_nltk_resources():
     resources = ['punkt', 'stopwords', 'wordnet', 'punkt_tab']
@@ -29,7 +32,8 @@ def load_nltk_resources():
             try:
                 nltk.download(res, quiet=True)
             except:
-                pass # Handle if download fails gracefully
+                pass  # Handle if download fails gracefully
+
 
 def get_stopword_list(language):
     if language == 'id':
@@ -38,11 +42,11 @@ def get_stopword_list(language):
         negation_words = {'tidak', 'tak', 'jangan', 'bukan', 'belum', 'kurang'}
         base_stopwords = base_stopwords - negation_words
         custom_stopwords = set([
-            'aku', 'jadi', 'kak', 'moga', 'banget', 'nya', 'ya', 'ga', 'gak', 
-            'gaes', 'bro', 'sis', 'gw', 'gue', 'lu', 'lo', 'nih', 'tuh', 'sih', 
+            'aku', 'jadi', 'kak', 'moga', 'banget', 'nya', 'ya', 'ga', 'gak',
+            'gaes', 'bro', 'sis', 'gw', 'gue', 'lu', 'lo', 'nih', 'tuh', 'sih',
             'dong', 'deh', 'kok', 'yg', 'dgn', 'utk', 'aja', 'sja', 'lg',
             'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'mau', 'min',
-            'apa', 'jadi', 'kenapa', 'gimana', 'kapan', 'mana' 
+            'apa', 'jadi', 'kenapa', 'gimana', 'kapan', 'mana'
         ])
         return base_stopwords.union(custom_stopwords)
     elif language == 'en':
@@ -51,6 +55,7 @@ def get_stopword_list(language):
         except:
             return set()
     return set()
+
 
 @st.cache_data
 def load_kamus_kata_baku():
@@ -62,13 +67,16 @@ def load_kamus_kata_baku():
     except:
         return {}
 
+
 # --- Text Processing Functions ---
 
 def case_fold(text):
     return text.lower()
 
+
 def tokenize(text):
     return word_tokenize(text)
+
 
 def clean_tokens(tokens):
     cleaned_tokens = []
@@ -80,19 +88,24 @@ def clean_tokens(tokens):
             cleaned_tokens.append(token)
     return cleaned_tokens
 
+
 def normalize_kata_baku(tokens, kamus_dict):
     return [kamus_dict.get(token, token) for token in tokens]
 
+
 def remove_stopwords(tokens, stopwords_list):
     return [word for word in tokens if word not in stopwords_list]
+
 
 def stem_text(tokens, stemmer):
     if not tokens: return []
     text_to_stem = ' '.join(tokens)
     return stemmer.stem(text_to_stem).split()
 
+
 def lemmatize_text(tokens, lemmatizer):
     return [lemmatizer.lemmatize(word) for word in tokens]
+
 
 # --- Main Pipeline ---
 
@@ -130,7 +143,7 @@ def preprocess_pipeline(text, pipeline_steps, language):
     # 4. Stopword Removal
     if pipeline_steps.get('stopword_removal'):
         tokens = remove_stopwords(tokens, stopwords_list)
-    
+
     tokens_filtered = tokens[:]
 
     # 5. Stemming / Lemmatization
@@ -143,6 +156,7 @@ def preprocess_pipeline(text, pipeline_steps, language):
     teks_final_joined = ' '.join(tokens_stemmed)
 
     return (teks_clean, tokens_awal, tokens_filtered, tokens_stemmed, teks_final_joined)
+
 
 # --- Utility Functions ---
 

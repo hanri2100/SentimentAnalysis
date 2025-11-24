@@ -1,11 +1,13 @@
-import streamlit as st
+import itertools
+import re
+from collections import Counter
+
+import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
+import streamlit as st
 from wordcloud import WordCloud
-import itertools
-from collections import Counter
-import re
+
 
 # --- Statistik Dasar ---
 
@@ -17,6 +19,7 @@ def calculate_basic_stats(series_before, series_after):
         return avg_before, avg_after
     except:
         return 0, 0
+
 
 # --- Perhitungan Frekuensi ---
 
@@ -34,15 +37,16 @@ def calculate_word_frequency(data_series, is_tokenized):
 
         if not all_tokens:
             return pd.DataFrame(columns=['Kata', 'Frekuensi'])
-            
+
         word_counts = Counter(all_tokens)
         df_freq = pd.DataFrame(word_counts.items(), columns=['Kata', 'Frekuensi'])
         df_freq = df_freq.sort_values(by='Frekuensi', ascending=False).reset_index(drop=True)
         return df_freq
-        
+
     except Exception as e:
         st.error(f"Error calculating frequency: {e}")
         return pd.DataFrame(columns=['Kata', 'Frekuensi'])
+
 
 # --- Visualisasi (Best Practice: Return Figure Object) ---
 
@@ -50,7 +54,7 @@ def calculate_word_frequency(data_series, is_tokenized):
 def create_wordcloud(freq_dict):
     if not freq_dict:
         return WordCloud(width=800, height=400, background_color='white').generate("No Data")
-        
+
     wc = WordCloud(
         width=800, height=400,
         background_color='white',
@@ -60,6 +64,7 @@ def create_wordcloud(freq_dict):
     )
     wc.generate_from_frequencies(freq_dict)
     return wc
+
 
 @st.cache_data
 def plot_word_frequency_seaborn(df_freq, top_n=20):
@@ -71,9 +76,9 @@ def plot_word_frequency_seaborn(df_freq, top_n=20):
 
     # Setup Figure dan Axes
     fig, ax = plt.subplots(figsize=(10, 7))
-    
+
     df_top_n = df_freq.head(top_n)
-    
+
     sns.barplot(
         x='Frekuensi',
         y='Kata',
@@ -81,24 +86,24 @@ def plot_word_frequency_seaborn(df_freq, top_n=20):
         palette='viridis',
         hue='Kata',
         legend=False,
-        ax=ax # Penting: Plot ke axes spesifik, bukan global plt
+        ax=ax  # Penting: Plot ke axes spesifik, bukan global plt
     )
-    
+
     ax.set_title(f'Top {top_n} Kata Paling Sering Muncul', fontsize=16)
     ax.set_xlabel('Frekuensi', fontsize=12)
     ax.set_ylabel('Kata', fontsize=12)
     ax.grid(axis='x', linestyle='--', alpha=0.6)
-    
+
     # Anotasi nilai
     for p in ax.patches:
         width = p.get_width()
         ax.text(
             width + 0.5,
             p.get_y() + p.get_height() / 2,
-            f'{int(width)}', 
+            f'{int(width)}',
             va='center',
             fontsize=10
         )
-    
+
     plt.tight_layout()
     return fig
