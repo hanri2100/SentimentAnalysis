@@ -46,7 +46,7 @@ def get_stopword_list(language):
             'aku', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kita', 'dia',
             
             # Kata Sapaan
-            'kak', 'kakak', 'bro', 'sis', 'min', 'mimin', 'gan', 'bang', 'pak', 'bu', 'bunda',
+            'kak', 'kakak', 'bro', 'sis', 'min', 'mimin', 'gan', 'bang',
             
             # Kata Sambung & Keterangan Gaul
             'jadi', 'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 
