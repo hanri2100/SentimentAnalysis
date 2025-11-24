@@ -51,7 +51,15 @@ st.title("Dashboard Preprocessing & Analisis Teks")
 
 # --- Sidebar: Data Manager ---
 with st.sidebar:
-    st.title("🗃️ Data Manager")
+    #st.title("🗃️ Data Manager")
+    st.markdown(
+        """
+        <h1 style='text-align: left; font-size: 28px; margin-top: 0px; margin-bottom: 10px;'>
+            🗃️ Data Manager
+        </h1>
+        """, 
+        unsafe_allow_html=True
+    )
     
     st.write("### Upload File")
     uploaded_files = st.file_uploader(
