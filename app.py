@@ -54,7 +54,7 @@ with st.sidebar:
     #st.title("🗃️ Data Manager")
     st.markdown(
         """
-        <h1 style='text-align: left; font-size: 28px; margin-top: -45px; margin-bottom: 0.5px;'>
+        <h1 style='text-align: left; font-size: 28px; margin-top: -45px; margin-bottom: 0px;'>
             🗃️ Data Manager
         </h1>
         """, 
