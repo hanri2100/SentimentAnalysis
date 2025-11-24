@@ -43,21 +43,30 @@ pl.load_nltk_resources()
 st.title("Dashboard Preprocessing & Analisis Teks")
 
 # --- Sidebar: Data Manager ---
+# --- Sidebar: Data Manager ---
 with st.sidebar:
     st.title("🗃️ Data Manager")
-
+    
     st.write("### Upload File")
     uploaded_files = st.file_uploader(
-        "Upload CSV (Bisa banyak file sekaligus)",
-        type=["csv"],
+        "Upload CSV atau Excel (Bisa banyak file sekaligus)",
+        # UBAH DI SINI: Tambahkan "xlsx" ke dalam list type
+        type=["csv", "xlsx"], 
         accept_multiple_files=True
     )
-
+    
     if uploaded_files:
         for uploaded_file in uploaded_files:
             if uploaded_file.name not in st.session_state.datasets:
                 try:
-                    df_temp = pd.read_csv(uploaded_file)
+                    # UBAH DI SINI: Logika pengecekan tipe file
+                    if uploaded_file.name.endswith('.xlsx'):
+                        # Baca sebagai Excel
+                        df_temp = pd.read_excel(uploaded_file)
+                    else:
+                        # Baca sebagai CSV (Default)
+                        df_temp = pd.read_csv(uploaded_file)
+                    
                     st.session_state.datasets[uploaded_file.name] = df_temp
                     st.toast(f"Dataset '{uploaded_file.name}' dimuat!", icon="✅")
                 except Exception as e:
