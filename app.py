@@ -142,7 +142,7 @@ with tab1:
 
         # Konfigurasi
         st.subheader("Konfigurasi & Kolom")
-        col_conf1, col_conf2 = st.columns(2)
+        col_conf1, col_conf2, col_empty = st.columns([1, 1, 2])
 
         with col_conf1:
             st.markdown("**Bahasa Dokumen:**")
@@ -280,13 +280,15 @@ with tab1:
                 if "user" in col.lower() or "nama" in col.lower() or "author" in col.lower():
                     user_idx_pred = i
                     break
-
-            selected_user_col = st.selectbox(
-                "Kolom Nama User:",
-                all_columns,
-                index=user_idx_pred,
-                key="select_user_col_final"
-            )
+            col_user_input, col_spacer = st.columns([1, 3]) 
+            
+            with col_user_input:
+                selected_user_col = st.selectbox(
+                    "Kolom Nama User:", 
+                    all_columns, 
+                    index=user_idx_pred,
+                    key="select_user_col_final"
+                )
 
             # 2. Membuat Dataframe Khusus (User + Teks Final)
             if selected_user_col and 'Teks_Final_Joined' in st.session_state.processed_df.columns:
