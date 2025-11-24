@@ -43,7 +43,6 @@ pl.load_nltk_resources()
 st.title("Dashboard Preprocessing & Analisis Teks")
 
 # --- Sidebar: Data Manager ---
-# --- Sidebar: Data Manager ---
 with st.sidebar:
     st.title("🗃️ Data Manager")
     
@@ -72,7 +71,9 @@ with st.sidebar:
                 except Exception as e:
                     st.error(f"Gagal memuat {uploaded_file.name}: {e}")
 
-    st.divider()
+    st.markdown("""
+        <hr style="margin-top: 0px; margin-bottom: 10px; border: none; height: 1px; background-color: #444;">
+    """, unsafe_allow_html=True)
 
     st.write("### Pilih Dataset Aktif")
     if not st.session_state.datasets:
