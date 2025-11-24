@@ -26,7 +26,7 @@ st.markdown("""
             margin-bottom: 10px !important;
         }
         [data-testid="stSidebarUserContent"] {
-            padding-top: 1rem !important; 
+            padding-top: 0rem !important; 
         }
     </style>
 """, unsafe_allow_html=True)
@@ -54,7 +54,7 @@ with st.sidebar:
     #st.title("🗃️ Data Manager")
     st.markdown(
         """
-        <h1 style='text-align: left; font-size: 28px; margin-top: 0px; margin-bottom: 10px;'>
+        <h1 style='text-align: left; font-size: 28px; margin-top: -30px; margin-bottom: 10px;'>
             🗃️ Data Manager
         </h1>
         """, 
@@ -63,7 +63,7 @@ with st.sidebar:
     
     st.write("### Upload File")
     uploaded_files = st.file_uploader(
-        "Upload CSV atau Excel (Bisa banyak file sekaligus)",
+        "Upload CSV atau xlxs (Bisa banyak file sekaligus)",
         # UBAH DI SINI: Tambahkan "xlsx" ke dalam list type
         type=["csv", "xlsx"], 
         accept_multiple_files=True
