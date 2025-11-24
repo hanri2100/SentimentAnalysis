@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- CSS HACK UNTUK MENGURANGI PADDING ATAS ---
+# --- CSS HACK UNTUK MENGURANGI ATAU MENAMBAHKAN PADDING DI TIAP SISI ---
 st.markdown("""
     <style>
         .block-container {
