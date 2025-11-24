@@ -176,7 +176,7 @@ with tab1:
 
         st.write("")
 
-        # Tombol Eksekusi (Dikecilkan sesuai request)
+        # Tombol Eksekusi
         col_btn, col_empty = st.columns([1, 4])  # Rasio 1:4 agar tombol kecil di kiri
         with col_btn:
             start_process = st.button("🚀 Mulai Proses", type="primary", width='stretch')
@@ -213,7 +213,7 @@ with tab1:
             st.divider()
             st.subheader("Hasil Preprocessing Lengkap")
 
-            # Pesan Total Data (Sesuai request)
+            # Pesan Total Data
             total_rows = len(st.session_state.processed_df)
             st.info(f"✅ **Sukses!** Total data berhasil diproses: **{total_rows}** baris.")
 
@@ -231,7 +231,7 @@ with tab1:
 
             st.dataframe(disp_df[cols_final], width='stretch', hide_index=True)
 
-            # Download Pertama (Lengkap)
+            # Download Pertama
             csv = pl.convert_df_to_csv(disp_df[cols_final])
             st.download_button(
                 label="📥 Unduh Hasil Ini",
@@ -240,7 +240,7 @@ with tab1:
                 mime="text/csv"
             )
 
-            # --- INI BAGIAN YANG DITAMBAHKAN (TABEL RINGKAS) ---
+            # --- INI BAGIAN TABEL RINGKAS ---
             st.divider()
             st.subheader("📄 Hasil Ringkas (User & Komentar Bersih)")
 
@@ -282,7 +282,7 @@ with tab1:
                     file_name=f"clean_simple_{st.session_state.active_dataset_name}",
                     mime="text/csv"
                 )
-            # --- AKHIR BAGIAN YANG DITAMBAHKAN ---
+            # --- AKHIR BAGIAN TABEL RINGKAS ---
 
 # --- TAB 2: VISUALISASI ---
 with tab2:
