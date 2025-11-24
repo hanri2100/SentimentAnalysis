@@ -146,7 +146,7 @@ def preprocess_pipeline(text, pipeline_steps, language):
 
     tokens_filtered = tokens[:]
 
-    # 5. Stemming / Lemmatization
+    # 5. Stemming Bila bahasa Indonesia atau Lemmatization Bila bahasa Inggris
     if language == 'id' and pipeline_steps.get('stemming'):
         tokens = stem_text(tokens, stemmer)
     elif language == 'en' and pipeline_steps.get('lemmatization'):
