@@ -43,10 +43,10 @@ def get_stopword_list(language):
         base_stopwords = base_stopwords - negation_words
         custom_stopwords = set([
             # Kata Ganti Orang
-            'aku', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kita', 'dia',
+            'aku', 'akuu', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kamuu', 'kita', 'dia',
             
             # Kata Sapaan
-            'kak', 'kakak', 'bro', 'sis', 'min', 'mimin', 'gan', 'bang',
+            'kak', 'kakak', 'mas', 'bro', 'sis', 'min', 'minn', 'mimin', 'gan', 'bang',
             'jadi', 'menjadi', 'terjadi', 'dijadikan', 'kejadian', 'jadinya',
             # Kata Sambung & Keterangan Gaul
             'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 'pas', 'dpt',
@@ -55,7 +55,7 @@ def get_stopword_list(language):
             'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah', 'ny', 'udh',
             'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
             'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'kl',
-            'mau', 'apa', 'kenapa', 'gimana', 'kapan', 'mana',
+            'mau', 'apa', 'kenapa', 'gimana', 'kapan', 'mana', 'nichh',
             'pas', 'tadi', 'segini', 'begini', 'begitu', 'udh', 'udah', 'dah',
             'telkom', 'university', 'univ', 'kampus', 'tel-u'
         ])
