@@ -51,24 +51,24 @@ st.title("Dashboard Preprocessing & Analisis Teks")
 
 # --- Sidebar: Data Manager ---
 with st.sidebar:
-    #st.title("🗃️ Data Manager")
+    # st.title("🗃️ Data Manager")
     st.markdown(
         """
         <h1 style='text-align: left; font-size: 28px; margin-top: -45px; margin-bottom: 0px;'>
             🗃️ Data Manager
         </h1>
-        """, 
+        """,
         unsafe_allow_html=True
     )
-    
+
     st.write("### Upload File")
     uploaded_files = st.file_uploader(
         "Upload CSV atau xlxs (Bisa banyak file sekaligus)",
         # UBAH DI SINI: Tambahkan "xlsx" ke dalam list type
-        type=["csv", "xlsx"], 
+        type=["csv", "xlsx"],
         accept_multiple_files=True
     )
-    
+
     if uploaded_files:
         for uploaded_file in uploaded_files:
             if uploaded_file.name not in st.session_state.datasets:
@@ -80,15 +80,15 @@ with st.sidebar:
                     else:
                         # Baca sebagai CSV (Default)
                         df_temp = pd.read_csv(uploaded_file)
-                    
+
                     st.session_state.datasets[uploaded_file.name] = df_temp
                     st.toast(f"Dataset '{uploaded_file.name}' dimuat!", icon="✅")
                 except Exception as e:
                     st.error(f"Gagal memuat {uploaded_file.name}: {e}")
-    #st.divider()
-    #'''st.markdown("""
-        #<hr style="margin-top: 0px; margin-bottom: 0px; border: none; height: 1px; background-color: #444;">
-    #""", unsafe_allow_html=True)'''
+    # st.divider()
+    # '''st.markdown("""
+    # <hr style="margin-top: 0px; margin-bottom: 0px; border: none; height: 1px; background-color: #444;">
+    # """, unsafe_allow_html=True)'''
 
     st.write("### Pilih Dataset Aktif")
     if not st.session_state.datasets:
@@ -280,12 +280,12 @@ with tab1:
                 if "user" in col.lower() or "nama" in col.lower() or "author" in col.lower():
                     user_idx_pred = i
                     break
-            col_user_input, col_spacer = st.columns([1, 3]) 
-            
+            col_user_input, col_spacer = st.columns([1, 3])
+
             with col_user_input:
                 selected_user_col = st.selectbox(
-                    "Kolom Nama User:", 
-                    all_columns, 
+                    "Kolom Nama User:",
+                    all_columns,
                     index=user_idx_pred,
                     key="select_user_col_final"
                 )
