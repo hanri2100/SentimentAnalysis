@@ -1,13 +1,13 @@
+import re
 import string
-import nltk
-import pandas as pd
 import streamlit as st
-import os
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
-from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+import nltk
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+import pandas as pd
 
 # --- Resources Loading (Cache) ---
 
@@ -29,21 +29,14 @@ def load_nltk_resources():
             try:
                 nltk.download(res, quiet=True)
             except:
-                pass
+                pass # Handle if download fails gracefully
 
 def get_stopword_list(language):
     if language == 'id':
         factory = StopWordRemoverFactory()
         base_stopwords = set(factory.get_stop_words())
-        
-        # PENTING: Karena Normalisasi dilakukan DULUAN, maka kata baku (seperti 'tidak')
-        # harus ada di stopword list ini agar terhapus.
-        
-        # Hapus kata negasi dari stopword bawaan jika ingin analisis sentimen detil
-        # Tapi jika ingin wordcloud bersih, biarkan saja.
         negation_words = {'tidak', 'tak', 'jangan', 'bukan', 'belum', 'kurang'}
-        base_stopwords = base_stopwords - negation_words 
-
+        base_stopwords = base_stopwords - negation_words
         custom_stopwords = set([
             # 1. KATA GANTI & SAPAAN
             'aku', 'akuu', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kamuu', 'kita', 'dia',
@@ -64,7 +57,6 @@ def get_stopword_list(language):
             'tadi', 'segini', 'begini', 'begitu', 'udah'
         ])
         return base_stopwords.union(custom_stopwords)
-        
     elif language == 'en':
         try:
             return set(stopwords.words('english'))
@@ -75,28 +67,11 @@ def get_stopword_list(language):
 @st.cache_data
 def load_kamus_kata_baku():
     try:
-        # Gunakan nama file CSV yang benar
-        file_path = 'kamuskatabaku.xlxs'
-        
-        # Cek apakah file ada
-        if not os.path.exists(file_path):
-            st.warning(f"File '{file_path}' tidak ditemukan. Normalisasi dilewati.")
-            return {}
-
-        # Baca CSV (Bukan Excel)
-        df_kamus = pd.read_csv(file_path, on_bad_lines='skip')
-        
-        col_slang = 'slang' if 'slang' in df_kamus.columns else 'tidak_baku'
-        col_formal = 'formal' if 'formal' in df_kamus.columns else 'kata_baku'
-
-        if col_slang in df_kamus.columns and col_formal in df_kamus.columns:
-            kamus_dict = dict(zip(df_kamus[col_slang], df_kamus[col_formal]))
-            return kamus_dict
-        else:
-            return {}
-
-    except Exception as e:
-        st.error(f"Error Loading Kamus: {e}")
+        # Pastikan file ada, jika tidak return dict kosong
+        df_kamus = pd.read_excel('kamuskatabaku.xlsx')
+        kamus_dict = dict(zip(df_kamus['tidak_baku'], df_kamus['kata_baku']))
+        return kamus_dict
+    except:
         return {}
 
 # --- Text Processing Functions ---
@@ -112,13 +87,12 @@ def clean_tokens(tokens):
     for token in tokens:
         # Hapus punctuation
         token = token.translate(str.maketrans('', '', string.punctuation))
-        # Hanya ambil HURUF (Angka dibuang: isalpha)
-        if token.isalpha() and token != '':
+        # Pastikan alphanumeric dan tidak kosong
+        if token.isalnum() and token != '':
             cleaned_tokens.append(token)
     return cleaned_tokens
 
 def normalize_kata_baku(tokens, kamus_dict):
-    # Mengganti token slang dengan token baku dari kamus
     return [kamus_dict.get(token, token) for token in tokens]
 
 def remove_stopwords(tokens, stopwords_list):
@@ -140,7 +114,7 @@ def preprocess_pipeline(text, pipeline_steps, language):
 
     processed_text = text
 
-    # Load resources
+    # Load resources on the fly based on need (cached)
     stemmer = get_sastrawi_stemmer() if (language == 'id' and pipeline_steps.get('stemming')) else None
     lemmatizer = get_nltk_lemmatizer() if (language == 'en' and pipeline_steps.get('lemmatization')) else None
     stopwords_list = get_stopword_list(language) if pipeline_steps.get('stopword_removal') else set()
@@ -155,20 +129,20 @@ def preprocess_pipeline(text, pipeline_steps, language):
         tokens = tokenize(processed_text)
         tokens = clean_tokens(tokens)
     else:
+        # Basic split if no tokenization selected (rare case)
         tokens = processed_text.split()
 
     teks_clean = ' '.join(tokens)
     tokens_awal = tokens[:]
 
-    # 3. Normalization (KAMUS DULUAN)
-    # Ini dijalankan sebelum Stopword removal
+    # 3. Normalization
     if pipeline_steps.get('normalization'):
         tokens = normalize_kata_baku(tokens, kamus_dict)
 
-    # 4. Stopword Removal (CUSTOM STOPWORD BELAKANGAN)
+    # 4. Stopword Removal
     if pipeline_steps.get('stopword_removal'):
         tokens = remove_stopwords(tokens, stopwords_list)
-
+    
     tokens_filtered = tokens[:]
 
     # 5. Stemming / Lemmatization
@@ -186,4 +160,5 @@ def preprocess_pipeline(text, pipeline_steps, language):
 
 @st.cache_data
 def convert_df_to_csv(df):
+    """Mengubah DataFrame menjadi format CSV binary untuk download."""
     return df.to_csv(index=False).encode('utf-8')
