@@ -7,3 +7,4 @@ Sastrawi
 seaborn
 matplotlib
 wordcloud
+openpyxl
