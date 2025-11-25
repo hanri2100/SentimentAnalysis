@@ -50,6 +50,7 @@ def get_stopword_list(language):
             'jadi', 'menjadi', 'terjadi', 'dijadikan', 'kejadian', 'jadinya',
             # Kata Sambung & Keterangan Gaul
             'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 
+            'dn', 'ada', 'bisa', 'juga',
             'ga', 'gak', 'nggak', 'gaes', 'guys', 
             'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah',
             'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
