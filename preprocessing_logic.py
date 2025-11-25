@@ -49,10 +49,10 @@ def get_stopword_list(language):
             'kak', 'kakak', 'bro', 'sis', 'min', 'mimin', 'gan', 'bang',
             'jadi', 'menjadi', 'terjadi', 'dijadikan', 'kejadian', 'jadinya',
             # Kata Sambung & Keterangan Gaul
-            'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 
-            'dn', 'ada', 'bisa', 'juga',
-            'ga', 'gak', 'nggak', 'gaes', 'guys', 
-            'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah',
+            'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 'pas', 'dpt',
+            'dn', 'ada', 'bisa', 'juga', 'doang', 'dlm', 'tapi', 'tp', 'tpi'
+            'ga', 'gak', 'nggak', 'gaes', 'guys', 'jg', 'bln', 'ny', 'sampe',
+            'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah', 'ny', 'udh',
             'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
             'smoga', 'smg', 'jg', 'jga', 'kyk', 'kek', 'kalo', 'kalau', 'kl',
             'mau', 'apa', 'kenapa', 'gimana', 'kapan', 'mana',
