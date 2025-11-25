@@ -9,6 +9,7 @@ from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 import pandas as pd
 
+
 # --- Resources Loading (Cache) ---
 
 @st.cache_resource
@@ -16,20 +17,28 @@ def get_sastrawi_stemmer():
     factory = StemmerFactory()
     return factory.create_stemmer()
 
+
 @st.cache_resource
 def get_nltk_lemmatizer():
     return WordNetLemmatizer()
 
+
 def load_nltk_resources():
-    resources = ['punkt', 'stopwords', 'wordnet', 'punkt_tab']
-    for res in resources:
+    resources = [
+        ('tokenizers/punkt', 'punkt'),
+        ('corpora/stopwords', 'stopwords'),
+        ('corpora/wordnet', 'wordnet'),
+        ('tokenizers/punkt_tab', 'punkt_tab')
+    ]
+    for path, res in resources:
         try:
-            nltk.data.find(f'tokenizers/{res}')
-        except LookupError:
+            nltk.data.find(path)
+        except Exception:
             try:
                 nltk.download(res, quiet=True)
             except:
                 pass # Handle if download fails gracefully
+
 
 def get_stopword_list(language):
     if language == 'id':
@@ -42,14 +51,14 @@ def get_stopword_list(language):
             'aku', 'akuu', 'saya', 'sy', 'gw', 'gue', 'lu', 'lo', 'kamu', 'kamuu', 'kita', 'dia',
             'kak', 'kakak', 'mas', 'bro', 'sis', 'min', 'minn', 'mimin', 'gan', 'bang',
             'pak', 'bu', 'bapak', 'ibu',
-            
+
             # 2. STEMMING LEAK (Kata 'jadi' dll)
             'jadi', 'menjadi', 'terjadi', 'dijadikan', 'kejadian', 'jadinya',
-            
+
             # 3. KATA UMUM / SAMPAH (Noise)
             'moga', 'banget', 'bgt', 'nya', 'ya', 'yaa', 'iya', 'pas', 'dpt',
             'dn', 'ada', 'bisa', 'juga', 'doang', 'dlm', 'tapi', 'tp', 'tpi',
-            'ga', 'gak', 'nggak', 'enggak', 'gaes', 'guys', 'jg', 'bln', 'ny', 'sampe', # Pastikan ada koma
+            'ga', 'gak', 'nggak', 'enggak', 'gaes', 'guys', 'jg', 'bln', 'ny', 'sampe',  # Pastikan ada koma
             'nih', 'tuh', 'sih', 'dong', 'deh', 'kok', 'mah', 'udh', 'sdh', 'dah',
             'yg', 'dgn', 'utk', 'karena', 'krn', 'aja', 'sja', 'lg', 'lagi',
             'smoga', 'smg', 'kyk', 'kek', 'kalo', 'kalau', 'kl',
@@ -64,6 +73,7 @@ def get_stopword_list(language):
             return set()
     return set()
 
+
 @st.cache_data
 def load_kamus_kata_baku():
     try:
@@ -74,13 +84,16 @@ def load_kamus_kata_baku():
     except:
         return {}
 
+
 # --- Text Processing Functions ---
 
 def case_fold(text):
     return text.lower()
 
+
 def tokenize(text):
     return word_tokenize(text)
+
 
 def clean_tokens(tokens):
     cleaned_tokens = []
@@ -92,19 +105,24 @@ def clean_tokens(tokens):
             cleaned_tokens.append(token)
     return cleaned_tokens
 
+
 def normalize_kata_baku(tokens, kamus_dict):
     return [kamus_dict.get(token, token) for token in tokens]
 
+
 def remove_stopwords(tokens, stopwords_list):
     return [word for word in tokens if word not in stopwords_list]
+
 
 def stem_text(tokens, stemmer):
     if not tokens: return []
     text_to_stem = ' '.join(tokens)
     return stemmer.stem(text_to_stem).split()
 
+
 def lemmatize_text(tokens, lemmatizer):
     return [lemmatizer.lemmatize(word) for word in tokens]
+
 
 # --- Main Pipeline ---
 
@@ -155,6 +173,7 @@ def preprocess_pipeline(text, pipeline_steps, language):
     teks_final_joined = ' '.join(tokens_stemmed)
 
     return (teks_clean, tokens_awal, tokens_filtered, tokens_stemmed, teks_final_joined)
+
 
 # --- Utility Functions ---
 
