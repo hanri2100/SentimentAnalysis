@@ -72,9 +72,15 @@ def load_kamus_kata_baku():
     try:
         # Pastikan file ada, jika tidak return dict kosong
         df_kamus = pd.read_excel('kamuskatabaku.xlsx')
-        kamus_dict = dict(zip(df_kamus['tidak_baku'], df_kamus['kata_baku']))
+        col_slang = 'slang' if 'slang' in df_kamus.columns else 'tidak_baku'
+        col_formal = 'formal' if 'formal' in df_kamus.columns else 'kata_baku'
+
+        kamus_dict = dict(zip(df_kamus[col_slang], df_kamus[col_formal]))
         return kamus_dict
-    except:
+
+    except Exception as e:
+        # Tampilkan error agar kita tahu apa salahnya
+        st.error(f"Error Loading Kamus: {e}")
         return {}
 
 
