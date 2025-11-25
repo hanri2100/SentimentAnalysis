@@ -25,11 +25,16 @@ def get_nltk_lemmatizer():
 
 
 def load_nltk_resources():
-    resources = ['punkt', 'stopwords', 'wordnet', 'punkt_tab']
-    for res in resources:
+    resources = [
+        ('tokenizers/punkt', 'punkt'),
+        ('corpora/stopwords', 'stopwords'),
+        ('corpora/wordnet', 'wordnet'),
+        ('tokenizers/punkt_tab', 'punkt_tab')
+    ]
+    for path, res in resources:
         try:
-            nltk.data.find(f'tokenizers/{res}')
-        except LookupError:
+            nltk.data.find(path)
+        except Exception:
             try:
                 nltk.download(res, quiet=True)
             except:
