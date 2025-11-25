@@ -72,7 +72,7 @@ def get_stopword_list(language):
 def load_kamus_kata_baku():
     try:
         # Pastikan file ada, jika tidak return dict kosong
-        df_kamus = pd.read_excel('/kamuskatabaku.xlsx')
+        df_kamus = pd.read_excel('kamuskatabaku.xlsx')
         col_slang = 'slang' if 'slang' in df_kamus.columns else 'tidak_baku'
         col_formal = 'formal' if 'formal' in df_kamus.columns else 'kata_baku'
 
