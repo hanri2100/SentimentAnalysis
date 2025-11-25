@@ -76,7 +76,7 @@ def get_stopword_list(language):
 def load_kamus_kata_baku():
     try:
         # Gunakan nama file CSV yang benar
-        file_path = 'kamuskatabaku.csv'
+        file_path = 'kamuskatabaku.xlxs'
         
         # Cek apakah file ada
         if not os.path.exists(file_path):
