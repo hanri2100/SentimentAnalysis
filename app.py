@@ -142,7 +142,7 @@ with tab1:
 
         # Konfigurasi
         st.subheader("Konfigurasi & Kolom")
-        col_conf1, col_conf2, col_empty = st.columns([1, 1, 2])
+        col_conf1, col_conf2, col_empty = st.columns([1, 1, 2], vertical_alignment="bottom")
 
         with col_conf1:
             st.markdown("**Bahasa Dokumen:**")
