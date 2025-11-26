@@ -101,7 +101,7 @@ def clean_tokens(tokens):
         # Hapus punctuation
         token = token.translate(str.maketrans('', '', string.punctuation))
         # Pastikan alphanumeric dan tidak kosong
-        if token.isalnum() and token != '':
+        if token.isalpha() and token != '':
             cleaned_tokens.append(token)
     return cleaned_tokens
 
